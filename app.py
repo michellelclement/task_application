@@ -15,10 +15,10 @@ mongo = PyMongo(app)
 
 
 # Old test section - keeping in for code for future
-# @app.route('/') # refers to defult route
-# @app.route('/get_tasks')
-# def get_tasks():
-#    return render_template("tasks.html", tasks=mongo.db.tasks.find())
+@app.route('/') # refers to defult route
+@app.route('/get_tasks')
+def get_tasks():
+  return render_template("tasks.html", tasks=mongo.db.tasks.find())
 
 
 # Add task new function
@@ -27,6 +27,11 @@ def add_task():
     return render_template('addtask.html', categories=mongo.db.categories.find())
 
 
+@app.route('/insert_task', methods=['POST'])
+def insert_task():
+    tasks = mongo.db.tasks
+    tasks.insert_one(request.form.to_dict())
+    return redirect(url_for('get_tasks'))
 
 #Set up IP address and port number so it knows where and how to run application
 if __name__ == '__main__':
