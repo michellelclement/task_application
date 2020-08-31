@@ -13,10 +13,19 @@ app.config["MONGO_URI"] = 'mongodb+srv://root:R00tUser@myfirstcluster.visoz.mong
 #Create an instance of PyMongo
 mongo = PyMongo(app)
 
-@app.route('/') #/ refers to defult route
-@app.route('/get_tasks')
-def get_tasks():
-    return render_template("tasks.html", tasks=mongo.db.tasks.find())
+
+# Old test section - keeping in for code for future
+# @app.route('/') # refers to defult route
+# @app.route('/get_tasks')
+# def get_tasks():
+#    return render_template("tasks.html", tasks=mongo.db.tasks.find())
+
+
+# Add task new function
+@app.route('/add_task')
+def add_task():
+    return render_template('addtask.html', categories=mongo.db.categories.find())
+
 
 
 #Set up IP address and port number so it knows where and how to run application
